@@ -29,3 +29,8 @@ def root():
 @app.route("/<path:path>", methods=["GET"])
 def static_files(path):
     return send_from_directory('static', path)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
