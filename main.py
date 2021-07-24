@@ -38,11 +38,13 @@ def stream():
                     'text': '[GENERATED] ' + html.unescape(model.make_short_sentence(400)),
                     'favorites': random.randrange(100, 40000),
                     'retweets': random.randrange(100, 40000),
-                    'date': str(random_date())
+                    'date': str(random_date()),
+                    'real': False
                 }
         else:
             selected = random.choice(data)
             selected["text"] = html.unescape(selected["text"])
+            selected["real"] = True
             yield selected
 
 
