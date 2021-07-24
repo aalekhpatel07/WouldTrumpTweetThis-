@@ -5,6 +5,7 @@ from flask_cors import cross_origin
 import json
 import random
 import datetime
+import html
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -34,13 +35,15 @@ def stream():
     while True:
         if random.random() <= .6:
             yield {
-                    'text': '[GENERATED] ' + model.make_short_sentence(400),
+                    'text': '[GENERATED] ' + html.unescape(model.make_short_sentence(400)),
                     'favorites': random.randrange(100, 40000),
                     'retweets': random.randrange(100, 40000),
                     'date': str(random_date())
                 }
         else:
-            yield random.choice(data)
+            selected = random.choice(data)
+            selected["text"] = html.unescape(selected["text"])
+            yield selected
 
 
 tweet_stream = stream()
