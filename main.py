@@ -29,7 +29,7 @@ def tweet():
         .get_collection("Tweet")
     )
 
-    random_tweet = tweets.aggregate([{ 'sample': {'size': 1 }}])
+    random_tweet = tweets.aggregate([{ '$sample': {'size': 1 }}])
 
     return jsonify(random_tweet)
 
