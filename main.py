@@ -59,10 +59,10 @@ def vote():
 
     return jsonify({'vote_id': vote_id})
 
-@app.route("<path:path>", methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route("/<path:path>", methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catch_all(path):
     return jsonify({'error': 'Not Found'}), 404
-    
+
 # @app.route("/", methods=["GET"])
 # def root():
 #     return send_from_directory('static', 'index.html')
