@@ -1,26 +1,17 @@
 <script>
     import moment from 'moment'
     import numeral from 'numeral'
-    
-    // load a locale
-    numeral.register('locale', 'enc', {
-        abbreviations: {
-            thousand: 'K',
-            million: 'M',
-            billion: 'B',
-            trillion: 'T'
-        },
-    });
-
-    numeral.locale('enc')
+    import { fade } from 'svelte/transition'
 
 
+    export let conclusion = false;
     export let fullName = "Donald Trump";
     export let username = "realDonaldTrump";
     export let text = "lorem ipsum dolor sit amet kasldald asdkald asd";
     export let date = new Date();
     export let favorites = 58123;
     export let retweets = 15002;
+    export let real = false;
 
     let twitterDateFormatter = (d) => {
         return moment(d).format('h:mm A [·] MMM DD[,] YYYY');
@@ -32,7 +23,33 @@
 
 
 </script>
-    <div class="md:max-w-xl p-4 border border-black-200 rounded-2xl">
+<div class="relative w-auto rounded-2xl">
+    {#if conclusion}
+        <div
+            class="absolute z-50"
+            style="left: calc(50% - 4rem); top: calc(50% - 4rem);"
+            in:fade="{{duration: 300, delay: 300}}"
+        >
+        {#if !real}
+            <svg class="w-32 h-32 text-red-400" viewBox="0 0 200 200" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M29.5 35L165.5 171" stroke-width="25"/>
+                <circle cx="100" cy="100" r="87.5" stroke-width="25"/>
+            </svg>
+        {:else}
+            <svg
+                viewBox="0 0 24 24"
+                style="color: rgb(29, 161, 242); fill: currentColor;"
+                class="w-32 h-32"
+            >
+                <g>
+                    <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z">
+                    </path>
+                </g>
+            </svg>
+        {/if}
+        </div>
+    {/if}
+    <div class="max-w-xl p-4 border border-black-200 rounded-2xl" id="realOrFake">
         <div class="flex items-start justify-between">
             <div class="pb-2 flex">
                 <img class="img-fluid rounded-full w-12 h-12" src="images/th.jpg" alt="Donald Trump Twitter">
@@ -95,7 +112,7 @@
             </div>
             <hr class="my-2">
             <div class="flex items-center">
-                <div class="flex justify-between text-sm mr-6 hover:text-pink-500 hover:underline cursor-pointer">
+                <div class="flex justify-between items-center text-sm mr-3 xl:mr-6 hover:text-pink-500 hover:underline cursor-pointer">
                     <svg
                         viewBox="0 0 24 24"
                         class="inline-block relative w-5"
@@ -109,7 +126,7 @@
                         {numberFormatter(favorites)}
                     </span>
                 </div>
-                <div class="flex justify-between text-sm mr-6 hover:text-blue-400 hover:underline cursor-pointer">
+                <div class="flex justify-between items-center text-sm mr-3 xl:mr-6 hover:text-blue-400 hover:underline cursor-pointer">
                     <svg
                         viewBox="0 0 24 24"
                         class="inline-block relative w-5"
@@ -123,7 +140,7 @@
                         {numberFormatter(retweets)}
                     </span>
                 </div>
-                <div class="flex justify-between text-sm hover:text-green-400 hover:underline cursor-pointer">
+                <div class="flex justify-between items-center text-sm hover:text-green-400 hover:underline cursor-pointer">
                     <svg
                         viewBox="0 0 24 24"
                         class="inline-block relative w-5"
@@ -140,6 +157,7 @@
             </div>
         </div>
     </div>
+</div>
 <style>
 
 </style>
