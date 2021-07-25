@@ -60,7 +60,7 @@ def vote():
         "stamp": datetime.datetime.now()
     }).inserted_id
 
-    return jsonify({'vote_id': vote_id})
+    return jsonify({'vote_id': str(vote_id)})
 
 
 @app.route("/<path:path>", methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -78,7 +78,7 @@ def catch_all(path):
                 'methods': ['POST']
             }
         ]
-    }), 404
+    }), 501
 
 
 @app.route("/", methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -96,7 +96,7 @@ def catch_index():
                 'methods': ['POST']
             }
         ]
-    }), 404
+    }), 501
 
 
 if __name__ == '__main__':
