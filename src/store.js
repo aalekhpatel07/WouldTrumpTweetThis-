@@ -1,5 +1,7 @@
 import { writable } from 'svelte/store'
 
+let localStorage = window?.localStorage;
+
 function createStreak() {
     const { subscribe, set, update } = writable(0);
     return {
@@ -13,17 +15,13 @@ function createStreak() {
 export const streak = createStreak();
 export const bestScore = writable(0);
 
-export function increment(){
-    streak.update(n => n + 1)
-    if(streak > bestStreak){
-        bestStreak.update(n => streak)
+bestScore.subscribe(v => {
+    if(localStorage) {
+        let prev = localStorage.getItem('wttt-best-score')
+        if (prev) {
+            localStorage.setItem('wttt-best-score', Math.max(v, prev))
+        } else {
+            localStorage.setItem('wttt-best-score', v)
+        }
     }
-}
-
-export function decrement(){
-    streak.update(n => n - 1)
-}
-
-export function resetStreak(){
-    streak.update(n => 0)
-}
+})

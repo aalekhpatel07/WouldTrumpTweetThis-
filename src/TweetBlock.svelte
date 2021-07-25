@@ -24,7 +24,7 @@
 
 
 </script>
-<div class="relative w-auto rounded-2xl">
+<div class="relative w-auto rounded-2xl bg-white">
     {#if conclusion}
         <div
             class="absolute z-50"

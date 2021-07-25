@@ -29,12 +29,8 @@
     }
 
     let hue = [0];
-    let tick = (v) => {
+    let bottomTick = (v) => {
         return emojiMap[`${v}`]
-    }
-
-    let topTick = (v) => {
-        return v
     }
 
     $: {
@@ -63,7 +59,7 @@
         pips
         pipstep={100}
         all="label"
-        formatter={tick}
+        formatter={bottomTick}
         on:stop={handleStop}
         disabled={voted}
     />

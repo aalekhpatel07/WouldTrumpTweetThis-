@@ -88,6 +88,9 @@
     }
 
     onMount(async () => {
+        if(window?.localStorage) {
+            bestScore.update(v => window.localStorage.getItem('wttt-best-score') || 0)
+        }
         tweet = await getTweet()
     })
 
@@ -105,7 +108,7 @@
 
 </script>
 <main>
-    <div class="" >
+    <div class="bg-gray-100" >
     <!-- <div class="xl:flex " > -->
         <!-- <div class="xl:w-2/3 xl:overflow-auto"> -->
         <div>
@@ -128,9 +131,30 @@
                 <!-- <article class="prose">
                     <h5>So... fake? or not? or maybe?</h5>
                 </article> -->
-                Streak: {$streak}
-                <br/>
-                Best Score: {$bestScore}
+                <div class="w-1/5 flex items-center justify-between">
+                    <div
+                        class="flex flex-col items-center p-4 text-white rounded-xl shadow-xl"
+                        style="background: rgb(29, 161, 242);"
+                    >
+                        <div class="font-extrabold">
+                            STREAK
+                        </div>
+                        <div class="font-extrabold text-xl">
+                            {$streak}
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col items-center p-4 text-white rounded-xl shadow-xl"
+                        style="background: rgb(29, 161, 242);"
+                    >
+                        <div class="font-extrabold">
+                            BEST
+                        </div>
+                        <div class="font-extrabold text-xl">
+                            {$bestScore}
+                        </div>
+                    </div>
+                </div>
                 <br/>
                 <TweetOrNotBlock
                     on:vote={handleVote}

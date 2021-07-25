@@ -1,7 +1,7 @@
 <script>
 
 </script>
-<footer class="bg-white bottom-0 sticky">
+<footer class="bg-white bottom-0 sticky" style="z-index: 99999;">
     <hr>
     <p class="text-center text-xs leading-10">
         <span class="text-xs xl:text-lg">made with
