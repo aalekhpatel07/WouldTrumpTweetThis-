@@ -1,4 +1,5 @@
 import os
+import datetime
 from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 import pymongo
@@ -54,14 +55,46 @@ def vote():
     )
     vote_id = votes.insert_one({
         "tweet_id": tweet_id,
-        "value": value
+        "value": value,
+        "stamp": datetime.datetime.now()
     }).inserted_id
 
     return jsonify({'vote_id': vote_id})
 
 @app.route("/<path:path>", methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catch_all(path):
-    return jsonify({'error': 'Not Found'}), 404
+    return jsonify({
+        'error': 'Not Found',
+        'message': 'This is strictly a RESTful API.',
+        'available_endpoints': [
+            {
+                'path': '/api/v1/tweet',
+                'methods': ['GET']
+            },
+            {
+                'path': '/api/v1/vote',
+                'methods': ['POST']
+            }
+        ]
+    }), 404
+
+
+@app.route("/", methods=['GET', 'POST', 'PUT', 'DELETE'])
+def catch_index():
+    return jsonify({
+        'error': 'Not Found',
+        'message': 'This is strictly a RESTful API.',
+        'available_endpoints': [
+            {
+                'path': '/api/v1/tweet',
+                'methods': ['GET']
+            },
+            {
+                'path': '/api/v1/vote',
+                'methods': ['POST']
+            }
+        ]
+    }), 404
 
 # @app.route("/", methods=["GET"])
 # def root():
