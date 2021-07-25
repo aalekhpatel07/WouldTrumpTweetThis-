@@ -20,17 +20,18 @@
 
     numeral.locale('enc')
 
-    let BASE = 'https://would-trump-tweet-this.herokuapp.com/'
-    if (process?.env?.isProd) {
-        BASE = "/"
+    function endpoint(action, version=1) {
+        let BASE = 'https://would-trump-tweet-this.herokuapp.com/'
+        return BASE + `api/v${version}/${action}`
     }
-    const ENDPOINT = 'api/v1/tweet'
+    const tweetEndpoint = endpoint('tweet')
+    const voteEndpoint = endpoint('vote')
 
     export let voted = false;
     export let shouldReset = false;
 
     async function getTweet() {
-        let response = await fetch(BASE + ENDPOINT, {
+        let response = await fetch(tweetEndpoint, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -40,13 +41,40 @@
         return await response.json()
     }
 
+    async function castVote({ tweet_id, value }) {
+        let response = await fetch(voteEndpoint, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tweet_id,
+                value
+            })
+        })
+        return await response.json()
+    }
+
     let tweet = undefined;
     
     function handleVote({detail}) {
+        console.log(detail)
         voted = true
-        setTimeout(() => {
-            shouldReset = true
-        }, 3000)
+        castVote({
+            tweet_id: tweet._id,
+            value: detail.value
+        })
+        .then(() => {
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        .finally(() => {
+            setTimeout(() => {
+                shouldReset = true
+            }, 3000)
+        })
     }
 
     async function handleReset() {

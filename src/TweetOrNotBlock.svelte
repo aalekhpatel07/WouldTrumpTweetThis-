@@ -16,7 +16,7 @@
     function handleStop({detail}){
         if(!voted) {
             dispatch('vote', {
-                value: (detail.value[0] + 100)/200
+                value: (detail.values[0] + 100)/200
             })
         }
     }
