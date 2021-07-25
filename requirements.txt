@@ -1,7 +1,6 @@
 certifi==2021.5.30
 charset-normalizer==2.0.3
 click==8.0.1
-faunadb==4.1.0
 Flask==2.0.1
 Flask-Cors==3.0.10
 future==0.18.2
