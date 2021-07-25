@@ -29,8 +29,13 @@ def tweet():
         .get_collection("Tweet")
     )
 
-    random_tweet = tweets.aggregate([{ '$sample': {'size': 1 }}])
-
+    result = tweets.aggregate([{ '$sample': {'size': 1 }}])
+    print(result)
+    random_tweet = result[u'result']
+    print(random_tweet)
+    del random_tweet["_id"]
+    
+    print(random_tweet)
     return jsonify(random_tweet)
 
 @app.route("/", methods=["GET"])
