@@ -43,7 +43,8 @@ export default {
 				env: {
 					isProd: production
 				}
-			})
+			}),
+			preventAssignment: true
 		}),
 		svelte({
 			compilerOptions: {
