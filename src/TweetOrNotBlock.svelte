@@ -5,6 +5,7 @@
     const dispatch = createEventDispatcher();
 
     export let voted = false;
+    export let refresh = false;
 
     let percentageToHue = (p) => {
         let polynomial = (x) => {
@@ -36,9 +37,15 @@
         return v
     }
 
+    $: {
+        if(refresh) {
+            hue = [0]
+        }
+    }
+
     $: percentage = (hue[0] + 100)/200;
     $: lightColor = `hsl(${percentageToHue(percentage)}, 89.1%, 53.1%)`;
-    $: color = `hsl(${percentageToHue(percentage) - 10}, 89.1%, 53.1%)`;
+    $: color = `hsl(${percentageToHue(percentage)}, 89.1%, 53.1%)`;
 
 </script>
 <div
@@ -57,7 +64,6 @@
         pipstep={100}
         all="label"
         formatter={tick}
-        handleFormatter={topTick}
         on:stop={handleStop}
         disabled={voted}
     />

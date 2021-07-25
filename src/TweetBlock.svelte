@@ -11,7 +11,8 @@
     export let date = new Date();
     export let favorites = 58123;
     export let retweets = 15002;
-    export let real = false;
+    export let correct;
+
 
     let twitterDateFormatter = (d) => {
         return moment(d).format('h:mm A [·] MMM DD[,] YYYY');
@@ -30,12 +31,12 @@
             style="left: calc(50% - 4rem); top: calc(50% - 4rem);"
             in:fade="{{duration: 300, delay: 300}}"
         >
-        {#if !real}
+        {#if correct === false}
             <svg class="w-32 h-32 text-red-400" viewBox="0 0 200 200" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M29.5 35L165.5 171" stroke-width="25"/>
                 <circle cx="100" cy="100" r="87.5" stroke-width="25"/>
             </svg>
-        {:else}
+        {:else if correct}
             <svg
                 viewBox="0 0 24 24"
                 style="color: rgb(29, 161, 242); fill: currentColor;"
