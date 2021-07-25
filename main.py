@@ -16,6 +16,7 @@ def get_db_client():
     HOST = f"mongodb+srv://{USERNAME}:{PASSWORD}@{CLUSTER}/{DATABASE}?retryWrites=true&w=majority"
     return pymongo.MongoClient(HOST)
 
+
 load_dotenv()
 app = Flask(__name__, static_url_path='/static')
 
@@ -29,12 +30,10 @@ def tweet():
         .get_collection("Tweet")
     )
 
-    result = tweets.aggregate([{ '$sample': {'size': 1 }}])
-    print(result, 'pycursor stuff???')
-    random_tweets = list(result)
-    print(random_tweets, 'after list??')
-    
-    return jsonify(random_tweets[0])
+    random_tweets = list(tweets.aggregate([{ '$sample': {'size': 1 }}]))
+    random_tweet = random_tweets[0]
+    random_tweet['_id'] = str(random_tweet['_id'])
+    return jsonify(random_tweet)
 
 @app.route("/", methods=["GET"])
 def root():
