@@ -3,6 +3,7 @@ from random import sample
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import cross_origin
 import pymongo
+from dotenv import load_dotenv
 
 
 def get_db_client():
@@ -15,7 +16,7 @@ def get_db_client():
     HOST = f"mongodb+srv://{USERNAME}:{PASSWORD}@{CLUSTER}/{DATABASE}?retryWrites=true&w=majority"
     return pymongo.MongoClient(HOST)
 
-
+load_dotenv()
 app = Flask(__name__, static_url_path='/static')
 
 
