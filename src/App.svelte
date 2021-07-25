@@ -131,26 +131,26 @@
                 <!-- <article class="prose">
                     <h5>So... fake? or not? or maybe?</h5>
                 </article> -->
-                <div class="w-1/5 flex items-center justify-between">
+                <div class="w-full lg:w-2/5 flex items-center justify-around">
                     <div
-                        class="flex flex-col items-center p-4 text-white rounded-xl shadow-xl"
+                        class="flex flex-col items-center p-4 text-white rounded-xl shadow-xl w-24"
                         style="background: rgb(29, 161, 242);"
                     >
                         <div class="font-extrabold">
                             STREAK
                         </div>
-                        <div class="font-extrabold text-xl">
+                        <div class="font-extrabold text-2xl">
                             {$streak}
                         </div>
                     </div>
                     <div
-                        class="flex flex-col items-center p-4 text-white rounded-xl shadow-xl"
+                        class="flex flex-col items-center p-4 text-white rounded-xl shadow-xl w-24"
                         style="background: rgb(29, 161, 242);"
                     >
                         <div class="font-extrabold">
                             BEST
                         </div>
-                        <div class="font-extrabold text-xl">
+                        <div class="font-extrabold text-2xl">
                             {$bestScore}
                         </div>
                     </div>
