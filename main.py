@@ -30,13 +30,11 @@ def tweet():
     )
 
     result = tweets.aggregate([{ '$sample': {'size': 1 }}])
-    print(result)
-    random_tweet = result[u'result']
-    print(random_tweet)
-    del random_tweet["_id"]
+    print(result, 'pycursor stuff???')
+    random_tweets = list(result)
+    print(random_tweets, 'after list??')
     
-    print(random_tweet)
-    return jsonify(random_tweet)
+    return jsonify(random_tweets[0])
 
 @app.route("/", methods=["GET"])
 def root():
