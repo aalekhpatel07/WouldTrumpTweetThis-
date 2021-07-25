@@ -1,7 +1,7 @@
 import os
 import datetime
 from flask import Flask, jsonify, request
-from flask_cors import cross_origin
+from flask_cors import CORS
 import pymongo
 from dotenv import load_dotenv
 
@@ -20,9 +20,10 @@ def get_db_client():
 load_dotenv()
 app = Flask(__name__, static_url_path='/static')
 
+CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 
 @app.route("/api/v1/tweet", methods=['GET'])
-@cross_origin()
 def tweet():
     tweets = (
         get_db_client()
@@ -37,7 +38,6 @@ def tweet():
 
 
 @app.route("/api/v1/vote", methods=['POST'])
-@cross_origin()
 def vote():
     if 'tweet_id' not in request.json:
         return jsonify({'error': 'Missing tweet_id'}), 400
