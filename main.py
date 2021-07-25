@@ -1,6 +1,5 @@
 import os
-from random import sample
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 import pymongo
 from dotenv import load_dotenv
@@ -35,13 +34,42 @@ def tweet():
     random_tweet['_id'] = str(random_tweet['_id'])
     return jsonify(random_tweet)
 
-@app.route("/", methods=["GET"])
-def root():
-    return send_from_directory('static', 'index.html')
 
-@app.route("/<path:path>", methods=["GET"])
-def static_files(path):
-    return send_from_directory('static', path)
+@app.route("/api/v1/vote", methods=['POST'])
+@cross_origin()
+def vote():
+    if 'tweet_id' not in request.json:
+        return jsonify({'error': 'Missing tweet_id'}), 400
+
+    if 'value' not in request.json:
+        return jsonify({'error': 'Missing value'}), 400
+
+    value = request.json['value']
+    tweet_id = request.json['id']
+
+    votes = (
+        get_db_client()
+        .get_database(os.getenv("DATABASE"))
+        .get_collection("Vote")
+    )
+    vote_id = votes.insert_one({
+        "tweet_id": tweet_id,
+        "value": value
+    }).inserted_id
+
+    return jsonify({'vote_id': vote_id})
+
+@app.route("<path:path>", methods=['GET', 'POST', 'PUT', 'DELETE'])
+def catch_all(path):
+    return jsonify({'error': 'Not Found'}), 404
+    
+# @app.route("/", methods=["GET"])
+# def root():
+#     return send_from_directory('static', 'index.html')
+
+# @app.route("/<path:path>", methods=["GET"])
+# def static_files(path):
+#     return send_from_directory('static', path)
 
 
 if __name__ == '__main__':
