@@ -33,7 +33,8 @@ def tweet():
 
     random_tweets = list(tweets.aggregate([{ '$sample': {'size': 1 }}]))
     random_tweet = random_tweets[0]
-    random_tweet['_id'] = str(random_tweet['_id'])
+    random_tweet['tweet_id'] = str(random_tweet['_id'])
+    del random_tweet['_id']
     return jsonify(random_tweet)
 
 
@@ -46,7 +47,7 @@ def vote():
         return jsonify({'error': 'Missing value'}), 400
 
     value = request.json['value']
-    tweet_id = request.json['id']
+    tweet_id = request.json['tweet_id']
 
     votes = (
         get_db_client()
